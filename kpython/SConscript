@@ -1,0 +1,58 @@
+import os
+Import('env')
+
+python_FILES = [
+    '__init__.py',
+    'kbase.py',
+    'kdaemonize.py',
+    'kdebug.py',
+    'kexecpg.py',
+    'kexternalrunner.py',
+    'kfile.py',
+    'kfilter.py',
+    'kflags.py',
+    'kgetstrings.py',
+    'kifconfig.py',
+    'kiniupdater.py',
+    'klog.py',
+    'kodict.py',
+    'koptions.py',
+    'kout.py',
+    'kpatch.py',
+    'kpg.py',
+    'kprocmonitor.py',
+    'kprompt.py',
+    'kproperty.py',
+    'kreadline.py',
+    'krun.py',
+    'ksort.py',
+    'ksudo.py',
+    'kvalues.py',
+    'kxmlrpc.py']
+
+python_PROGS = [
+    'kexecpg.py',
+    'kiniupdater.py',
+    'kprocmonitor.py',
+    'kexternalrunner.py']
+
+install = []
+builds = []
+
+pylibdir = os.path.join(env['PYTHONDIR'], 'kpython')
+
+for pf in python_FILES:
+    installed_py = env.Install(target = pylibdir)
+    install.append(installed_py)
+
+for pp in python_PROGS:
+    shName = os.path.splitext(os.path.basename(pp))[0]
+    # Predefine LINESEPARATOR or Textfile will choke.
+    env['LINESEPARATOR'] = os.linesep
+    psh = env.Textfile(shName, ["#!/bin/sh",
+                                "export PYTHONPATH=$PYTHONDIR",
+                                "$BINDIR/" + str(pp)])
+    install.append(env.Install(dir = env['PYTHONDIR'], target = pp))
+    install.append(env.Install(dir = env['BINDIR'], target = psh))
+
+Return('builds install')
