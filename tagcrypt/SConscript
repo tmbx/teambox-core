@@ -1,0 +1,64 @@
+Import('env')
+
+import os
+
+lib_NAME = "libtagcrypt"
+main_env = env
+
+# build the lib
+env = main_env.Clone()
+
+tagcrypt_FILES = ['tagcrypt.c',
+                  'tagcryptgen.c',
+                  'tagcryptpkey.c',
+                  'tagcryptsignature.c',
+                  'tagcryptsignsubpacket.c',
+                  'tagcryptskey.c',
+                  'tagcryptsymkey.c',
+                  'tagcryptotut.c']
+
+install_HEADERS = ['tagcrypt.h',
+                   'tagcryptgen.h',
+                   'tagcryptlog.h',
+                   'tagcryptpkey.h',
+                   'tagcryptsignature.h',
+                   'tagcryptskey.h',
+                   'tagcryptsymkey.h',
+                   'tagcryptversion.h',
+                   'tagcryptotut.h',
+                   'tagcryptgen.h']
+		   
+shared_OBJS = []
+static_OBJS = []
+
+for s in tagcrypt_FILES:
+    shared_OBJS.append(env.SharedObject(s))
+    static_OBJS.append(env.StaticObject(s))
+
+cpp_path = ["#libktools/src", "."]
+lib_path = ["#build/libktools"]
+lib_list = ["ktools"]
+
+env["CPPPATH"] += cpp_path
+env["LIBPATH"] += lib_path
+env["LIBS"] += lib_list
+
+shared_LIBS = [env.SharedLibrary(target = lib_NAME,
+                                 source = shared_OBJS,
+                                 LINKFLAGS= '-Wl,-soname,' + lib_NAME + '.so.$BASE_VERSION')]
+
+static_LIBS = [env.StaticLibrary(target = lib_NAME,
+                                 source = static_OBJS)]
+
+OBJS = shared_OBJS + static_OBJS
+
+install = []
+installed_so = env.InstallAs(target = '$LIBDIR/' + lib_NAME + '.so.$VERSION', source = shared_LIBS)
+install.append(installed_so)
+install.append(env.Link(target = ['$LIBDIR/' + lib_NAME + '.so.$BASE_VERSION', '$LIBDIR/' +lib_NAME + '.so'], source = installed_so))
+install.append(env.Install(dir = '$LIBDIR', source = static_LIBS))
+install.append(env.Install(dir = '$INCDIR', source = install_HEADERS))
+
+builds = OBJS + static_LIBS + shared_LIBS
+
+Return('builds install')
