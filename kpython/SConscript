@@ -52,7 +52,7 @@ for pp in python_PROGS:
     env['LINESEPARATOR'] = os.linesep
     psh = env.Textfile(shName, ["#!/bin/sh",
                                 "export PYTHONPATH=$PYTHONDIR",
-                                "$BINDIR/" + str(pp)])
+                                "$PYTHONDIR/" + str(pp)])
     install.append(env.Install(dir = env['PYTHONDIR'], target = pp))
     shInst = env.Install(dir = env['BINDIR'], target = psh)
     env.AddPostAction(shInst, Chmod("$TARGET", 0755))
