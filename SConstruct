@@ -27,7 +27,9 @@ lib_OPTIONS.AddOptions(
     BoolOption('debug', 'Compile with all debug options turned on', 1),
     BoolOption('test', 'Build test', 1),
     ('PREFIX', 'Base directory to install the lib', '/usr/local'),
+    ('BINDIR', 'Directory to install binary files', '$PREFIX/bin'),
     ('LIBDIR', 'Directory to install library files', '$PREFIX/lib'),
+    ('PYTHONDIR', 'Directory to install Python files', '$PREFIX/share/python'),
     ('INCDIR', 'Directory where to install the header files', '$PREFIX/include'),
     ('WIN_PTHREAD', 'Path to the pthread library on Windows', 'C:/birtz/lib/pthreads-w32-2-8-0-release'))
 
@@ -47,10 +49,14 @@ builds, install = SConscript('tagcrypt/SConscript',
                              duplicate = 0,
                              exports = 'env',
                              variant_dir = os.path.join('build', 'tagcrypt'))
+builds, install = SConscript('kpython/SConscript',
+                             duplicate = 0,
+                             exports = 'env')
 
 # install
 install.append(env.Dir(name=env['LIBDIR']))
 install.append(env.Dir(name=env['INCDIR']))
+install.append(env.Dir(name=env['PYTHONDIR']))
 env.Alias('install', install)
 
 # clean

@@ -39,10 +39,12 @@ python_PROGS = [
 install = []
 builds = []
 
-pylibdir = os.path.join(env['PYTHONDIR'], 'kpython')
+pylibdir = env.Dir(os.path.join(env['PYTHONDIR'], 'kpython'))
+pydir = env.Dir(env['PYTHONDIR'])
+bindir = env.Dir(env['BINDIR'])
 
 for pf in python_FILES:
-    installed_py = env.Install(target = pylibdir)
+    installed_py = env.Install(dir = pylibdir, target = pf)
     install.append(installed_py)
 
 for pp in python_PROGS:
