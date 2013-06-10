@@ -54,6 +54,8 @@ for pp in python_PROGS:
                                 "export PYTHONPATH=$PYTHONDIR",
                                 "$BINDIR/" + str(pp)])
     install.append(env.Install(dir = env['PYTHONDIR'], target = pp))
-    install.append(env.Install(dir = env['BINDIR'], target = psh))
+    shInst = env.Install(dir = env['BINDIR'], target = psh)
+    env.AddPostAction(shInst, Chmod("$TARGET", 0755))
+    install.append(shInst)
 
 Return('builds install')
