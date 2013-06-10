@@ -29,7 +29,7 @@ lib_OPTIONS.AddOptions(
     ('PREFIX', 'Base directory to install the lib', '/usr/local'),
     ('BINDIR', 'Directory to install binary files', '$PREFIX/bin'),
     ('LIBDIR', 'Directory to install library files', '$PREFIX/lib'),
-    ('PYTHONDIR', 'Directory to install Python files', '$PREFIX/share/python/teambox'),
+    ('PYTHONDIR', 'Directory to install Python files', '$PREFIX/share/teambox/python'),
     ('INCDIR', 'Directory where to install the header files', '$PREFIX/include'),
     ('WIN_PTHREAD', 'Path to the pthread library on Windows', 'C:/birtz/lib/pthreads-w32-2-8-0-release'))
 
