@@ -63,6 +63,7 @@ SConscript('kpython/SConscript', duplicate = 0, exports = 'env')
 SConscript('kweb/SConscript',duplicate = 0, exports = 'env')
 
 # install
+install.append(env.Dir(name=env['BINDIR']))
 install.append(env.Dir(name=env['LIBDIR']))
 install.append(env.Dir(name=env['INCDIR']))
 install.append(env.Dir(name=env['PYTHONDIR']))
