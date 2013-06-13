@@ -54,10 +54,9 @@ def exec_pg_select_rb(conn, *query):
         conn.rollback()
         raise e
 
-# This function escapes a bytea string. Note that the bytea string returned will
-# be enclosed within E' and ', e.g. E'mybytea'.
+# This function escapes a bytea string. 
 def escape_pg_bytea(bytea):
-    return "E'" + pgdb.escape_bytea(bytea) + "'"
+    return "'" + pgdb.escape_bytea(bytea) + "'"
 
 # This function unescapes a bytea string returned by Postgres.
 def unescape_pg_bytea(bytea):
