@@ -1,3 +1,4 @@
+# Hey, Emacs! This is a -*- Python -*- file!
 #
 # Copyright (C) 2006-2012 Opersys inc.
 # 
@@ -19,6 +20,7 @@ Import('env')
 python_FILES = [
     '__init__.py',
     'kbase.py',
+    'config.py',
     'kdaemonize.py',
     'kdebug.py',
     'kexecpg.py',
@@ -56,6 +58,8 @@ builds = []
 
 pydir = env.Dir(env['PYTHONDIR'])
 bindir = env.Dir(env['BINDIR'])
+
+env.Textfile('config.py', ["CONF_DIR = \'$CONFDIR\'"])
 
 for pf in python_FILES:
     installed_py = env.Install(dir = pydir, target = pf)

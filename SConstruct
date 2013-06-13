@@ -1,3 +1,4 @@
+# Hey, Emacs! This is a -*- Python -*- file!
 #
 # Copyright (C) 2006-2012 Opersys inc.
 # 
@@ -41,6 +42,7 @@ lib_OPTIONS.AddOptions(
     ('LIBDIR', 'Directory to install library files', '$PREFIX/lib'),
     ('PYTHONDIR', 'Directory to install Python files', '$PREFIX/share/teambox/python'),
     ('INCDIR', 'Directory where to install the header files', '$PREFIX/include'),
+    ('CONFDIR', 'Configuration file path', '$PREFIX/etc/teambox'),
     ('WIN_PTHREAD', 'Path to the pthread library on Windows', 'C:/birtz/lib/pthreads-w32-2-8-0-release'))
 
 # Setup the build environment.
