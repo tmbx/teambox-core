@@ -77,7 +77,7 @@ class KSession:
         creation_date = row[0]
         last_read = row[1]
         last_update = row[2]
-        data = pickle.loads(row[3].value)
+        data = pickle.loads(row[3])
         self.conn.commit()
         self.creation_date = creation_date
         self.last_read = last_read
