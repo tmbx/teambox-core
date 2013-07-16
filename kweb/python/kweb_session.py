@@ -130,7 +130,7 @@ class KSession:
             self.conn.commit()
 
 # This function opens the Postgres session connection if required.
-def ksession_open_pg_conn(database="session"):
+def ksession_open_pg_conn(db_name, db_host, db_port, db_user, db_pwd):
     global ksession_pg_conn
     
     # There is a cached connection open. Test if it works.
@@ -152,7 +152,11 @@ def ksession_open_pg_conn(database="session"):
         kdebug.debug(2, "No session connection open, opening new one.", "ksession")
         
     try:
-        ksession_pg_conn = open_pg_conn(database=database)
+        ksession_pg_conn = open_pg_conn(database = db_name, 
+                                        host = db_host,
+                                        port = db_port,
+                                        user = db_user,
+                                        password = db_pwd)
     except:
         ksession_pg_conn = None
         raise
@@ -162,10 +166,13 @@ def ksession_open_pg_conn(database="session"):
 # specified, the function attempts to create a new session. If create_as_needed
 # is false, however, the function throws an exception instead of creating a new
 # session. On success, the session object is returned.
-def ksession_get_session(sid=None, database='session', create_as_needed=1):
+def ksession_get_session(db_name, db_host, db_port, db_user, db_pwd,
+                         sid=None, create_as_needed=1):
 
     # Open the session connection if required.
-    ksession_open_pg_conn(database=database)
+    ksession_open_pg_conn(db_name = db_name, db_host = db_host,
+                          db_port = db_port, db_user = db_user,
+                          db_pwd = db_pwd)
     
     # Create the session object.
     s = KSession(ksession_pg_conn)
