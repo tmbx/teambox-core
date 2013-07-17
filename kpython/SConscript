@@ -59,9 +59,10 @@ builds = []
 pydir = env.Dir(env['PYTHONDIR'])
 bindir = env.Dir(env['BINDIR'])
 
-env.Textfile('config.py', ["CONF_DIR = \'$CONFDIR\'",
-                           "PREFIX = \'$PREFIX\'",
-                           "PYTHON_DIR = '\$PYTHONDIR\'"])
+env.Textfile('config.py', ["CONF_DIR = '$CONFDIR'",
+                           "PREFIX = '$PREFIX'",
+                           "BINDIR = '$BINDIR'",
+                           "PYTHON_DIR = '$PYTHONDIR'"])
 
 for pf in python_FILES:
     installed_py = env.Install(dir = pydir, target = pf)
