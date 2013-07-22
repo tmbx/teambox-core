@@ -7,12 +7,10 @@
 
 import sys, getopt, signal, socket
 
-sys.path.append("/usr/share/python-support/kpython")
 from kbase import *
 from kfile import *
 from kout import *
 from kdaemonize import *
-
 
 # Configuration.
 
